@@ -22,14 +22,6 @@ const user = new Schema(
       type: String,
       default: null,
     },
-    // vCode: {
-    //   type: String,
-    //   default: null,
-    // },
-    // verify: {
-    //   type: Boolean,
-    //   default: false,
-    // },
     name: {
       type: String,
       required: [true, "Name is required"],

@@ -11,7 +11,6 @@ const {
 } = require("../schemas/userValidate");
 const {
   registrationService,
-  // verificationService,
   loginService,
   logoutService,
 } = require("../services/authService");
@@ -35,21 +34,6 @@ const registrationController = async (req, res, next) => {
     throw new ValidateError(requestValidate.error);
   }
 };
-
-// const verifycationController = async (req, res, next) => {
-//   const { vCode } = req.params;
-//   const { email } = req.body;
-
-//   const data = await verificationService(email, vCode);
-//   if (!data) {
-//     throw new AutorizationError("email or verification code is wrong");
-//   }
-//   return res.status(200).json({
-//     message: "verification successful",
-//     code: 200,
-//     data,
-//   });
-// };
 
 const loginController = async (req, res, next) => {
   const requestValidate = userLoginValidate.validate(req.body);
@@ -81,7 +65,6 @@ const logoutController = async (req, res, next) => {
 
 module.exports = {
   registrationController,
-  // verifycationController,
   loginController,
   logoutController,
 };

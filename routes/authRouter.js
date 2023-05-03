@@ -5,7 +5,6 @@ const { authMiddleware } = require("../middleware/authMiddleware");
 
 const {
   registrationController,
-  // verifycationController,
   loginController,
   logoutController,
 } = require("../controllers/authController");
@@ -13,7 +12,6 @@ const {
 const router = express.Router();
 
 router.post("/registration", asyncWrapper(registrationController));
-// router.post("/verify/:vCode", asyncWrapper(verifycationController));
 router.post("/login", asyncWrapper(loginController));
 
 router.use(authMiddleware);
