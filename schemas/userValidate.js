@@ -40,9 +40,9 @@ const userLoginValidate = Joi.object({
 });
 
 const userPatchValidate = Joi.object({
-  name: Joi.string()
-    .pattern(new RegExp("^[a-zа-яA-ZА-Я0-9]{1,16}[ a-zа-яA-ZА-Я0-9]{0,16}$"))
-    .required(),
+  name: Joi.string().pattern(
+    new RegExp("^[a-zа-яA-ZА-Я0-9]{1,16}[ a-zа-яA-ZА-Я0-9]{0,16}$")
+  ),
   avatarUrl: Joi.any(),
 });
 

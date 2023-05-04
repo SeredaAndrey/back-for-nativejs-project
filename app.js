@@ -4,6 +4,7 @@ const cors = require("cors");
 
 const { authRouter } = require("./routes/authRouter");
 const { userRouter } = require("./routes/userRouter");
+const { postRouter } = require("./routes/postRouter");
 
 const { errorHandler } = require("./middleware/errorHandler");
 

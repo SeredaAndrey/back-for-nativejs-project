@@ -16,8 +16,7 @@ const getUserDataController = async (req, res, next) => {
       code: 200,
       user,
     });
-  }
-  throw new FoundingError("User not found");
+  } else throw new FoundingError("User not found");
 };
 
 const getUserInfoController = async (req, res, next) => {
@@ -29,9 +28,7 @@ const getUserInfoController = async (req, res, next) => {
       code: 200,
       infoUser,
     });
-  } else {
-    throw new FoundingError("user information not found");
-  }
+  } else throw new FoundingError("user information not found");
 };
 
 const patchUserDataController = async (req, res, next) => {

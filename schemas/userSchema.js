@@ -16,7 +16,7 @@ const user = new Schema(
     },
     loggedIn: {
       type: Boolean,
-      default: false,
+      default: true,
     },
     avatarUrl: {
       type: String,

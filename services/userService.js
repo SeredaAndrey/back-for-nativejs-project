@@ -2,7 +2,7 @@ const Post = require("../schemas/postSchema");
 const User = require("../schemas/userSchema");
 
 const getUserDataService = async (_id) => {
-  return await User.findOne({ _id }, { password: 0, vCode: 0 });
+  return await User.findOne({ _id }, { password: 0 });
 };
 
 const getUserInfoService = async (_id) => {
