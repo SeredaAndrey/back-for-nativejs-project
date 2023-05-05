@@ -1,15 +1,18 @@
 const { FoundingError, ValidateError } = require("../middleware/errorHandler");
 const { paginationQuerryValidation } = require("../schemas/paginationValidate");
+const { patchPostValidate } = require("../schemas/postValidate");
 const { createPostValidate } = require("../schemas/postValidate");
 const {
   getUserPostService,
   createUserPostService,
   deleteUserPostService,
+  changeUserPostService,
+  getSingleUserPostService,
 } = require("../services/postService");
 
 const getUserPostController = async (req, res, next) => {
   const reqValidate = paginationQuerryValidation.validate(req.query);
-  const _id = req.user._id;
+  const userId = req.user._id;
 
   let { page = 1, limit = 4 } = req.query;
 
@@ -17,7 +20,7 @@ const getUserPostController = async (req, res, next) => {
   const skip = (parseInt(page) - 1) * limit;
 
   if (!reqValidate.error) {
-    const posts = await getUserPostService(_id, { skip, limit });
+    const posts = await getUserPostService(userId, { skip, limit });
     if (posts) {
       res.status(200).json({
         message: "getting user posts is success",
@@ -40,11 +43,11 @@ const createUserPostController = async (req, res, next) => {
     photo = null;
   }
   const reqValidate = createPostValidate.validate(req.body);
-  const _id = req.user._id;
+  const userId = req.user._id;
   const body = req.body;
 
   if (!reqValidate.error) {
-    const post = await createUserPostService(_id, body, photo);
+    const post = await createUserPostService(userId, body, photo);
     if (post) {
       res.status(201).json({
         message: "create post success",
@@ -57,9 +60,9 @@ const createUserPostController = async (req, res, next) => {
 
 const deleteUserPostController = async (req, res, next) => {
   const { postId } = req.params;
-  console.log(req.params);
+  const userId = req.user._id;
 
-  const post = await deleteUserPostService(postId);
+  const post = await deleteUserPostService(postId, userId);
   if (post) {
     res.status(200).json({
       message: "delete post success",
@@ -69,8 +72,51 @@ const deleteUserPostController = async (req, res, next) => {
   } else throw new FoundingError("post not found");
 };
 
+const getSingleUserPostController = async (req, res, next) => {
+  const { postId } = req.params;
+  const userId = req.user._id;
+
+  const post = await getSingleUserPostService(postId, userId);
+
+  if (post) {
+    res.status(200).json({
+      message: "get post success",
+      code: 200,
+      post,
+    });
+  } else throw new FoundingError("post not found");
+};
+
+const changeUserPostController = async (req, res, next) => {
+  const { postId } = req.params;
+  const userId = req.user._id;
+  const body = req.body;
+
+  const reqValidate = patchPostValidate.validate(req.body);
+
+  let photo = "";
+  if (req.file) {
+    photo = req.file.path;
+  } else {
+    photo = null;
+  }
+
+  if (!reqValidate.error) {
+    const post = await changeUserPostService(postId, userId, body, photo);
+    if (post) {
+      res.status(200).json({
+        message: "change post success",
+        code: 200,
+        post,
+      });
+    } else throw new FoundingError("post not found");
+  } else throw new ValidateError(reqValidate.error);
+};
+
 module.exports = {
   getUserPostController,
   createUserPostController,
+  getSingleUserPostController,
   deleteUserPostController,
+  changeUserPostController,
 };

@@ -9,6 +9,8 @@ const {
   getUserPostController,
   createUserPostController,
   deleteUserPostController,
+  changeUserPostController,
+  getSingleUserPostController,
 } = require("../controllers/postController");
 
 const router = express.Router();
@@ -21,6 +23,12 @@ router.post(
   uploadPostPhotoCloud.single("image"),
   asyncWrapper(createUserPostController)
 );
+router.get("/:postId", asyncWrapper(getSingleUserPostController));
 router.delete("/:postId", asyncWrapper(deleteUserPostController));
+router.patch(
+  "/:postId",
+  uploadPostPhotoCloud.single("image"),
+  asyncWrapper(changeUserPostController)
+);
 
 module.exports = { postRouter: router };
