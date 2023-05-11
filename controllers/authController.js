@@ -20,12 +20,12 @@ const registrationController = async (req, res, next) => {
   const body = req.body;
 
   if (!requestValidate.error) {
-    const user = await registrationService(body);
-    if (user) {
+    const data = await registrationService(body);
+    if (data) {
       return res.status(201).json({
         message: "created",
         code: 201,
-        user,
+        data,
       });
     } else {
       throw new ConflictError("Email is already in use");
