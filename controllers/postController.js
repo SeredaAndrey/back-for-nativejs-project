@@ -3,6 +3,7 @@ const { paginationQuerryValidation } = require("../schemas/paginationValidate");
 const { patchPostValidate } = require("../schemas/postValidate");
 const { createPostValidate } = require("../schemas/postValidate");
 const {
+  getPostService,
   getUserPostService,
   createUserPostService,
   deleteUserPostService,
