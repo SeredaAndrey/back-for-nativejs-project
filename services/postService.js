@@ -1,5 +1,12 @@
 const Post = require("../schemas/postSchema");
 
+const getPostService = async ({ skip, limit }) => {
+  const count = await Post.find({}).count();
+  const countPage = await Post.find({}).skip(skip).limit(limit).count();
+  const posts = await Post.find({}).skip(skip).limit(limit);
+  return { count, countPage, posts };
+};
+
 const getUserPostService = async (userId, { skip, limit }) => {
   const count = await Post.find({ owner: userId }).count();
   const countPage = await Post.find({ owner: userId })
@@ -39,6 +46,7 @@ const changeUserPostService = async (postId, userId, body, photo) => {
 };
 
 module.exports = {
+  getPostService,
   getUserPostService,
   createUserPostService,
   getSingleUserPostService,

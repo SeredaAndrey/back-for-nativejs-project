@@ -6,6 +6,7 @@ const { authMiddleware } = require("../middleware/authMiddleware");
 const uploadPostPhotoCloud = require("../middleware/uploadPostPhotoMiddlevare");
 
 const {
+  getPostController,
   getUserPostController,
   createUserPostController,
   deleteUserPostController,
@@ -18,6 +19,7 @@ const router = express.Router();
 router.use(authMiddleware);
 
 router.get("/", asyncWrapper(getUserPostController));
+router.get("/all", asyncWrapper(getPostController));
 router.post(
   "/",
   uploadPostPhotoCloud.single("image"),

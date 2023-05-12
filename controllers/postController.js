@@ -10,6 +10,30 @@ const {
   getSingleUserPostService,
 } = require("../services/postService");
 
+const getPostController = async (req, res, next) => {
+  const reqValidate = paginationQuerryValidation.validate(req.query);
+
+  let { page = 1, limit = 4 } = req.query;
+
+  limit = parseInt(limit);
+  const skip = (parseInt(page) - 1) * limit;
+
+  if (!reqValidate.error) {
+    const posts = await getPostService({ skip, limit });
+    if (posts) {
+      res.status(200).json({
+        message: "getting posts is success",
+        code: 200,
+        data: posts.posts,
+        count: posts.count,
+        countPage: posts.countPage,
+        page: page,
+        limit: limit,
+      });
+    } else throw new FoundingError("posts not found");
+  } else throw new ValidateError(reqValidate.error);
+};
+
 const getUserPostController = async (req, res, next) => {
   const reqValidate = paginationQuerryValidation.validate(req.query);
   const userId = req.user._id;
@@ -114,6 +138,7 @@ const changeUserPostController = async (req, res, next) => {
 };
 
 module.exports = {
+  getPostController,
   getUserPostController,
   createUserPostController,
   getSingleUserPostController,
