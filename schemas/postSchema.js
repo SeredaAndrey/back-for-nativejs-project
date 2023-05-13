@@ -14,7 +14,8 @@ const post = new Schema(
     comments: [
       {
         user: { type: mongoose.Schema.Types.ObjectId, ref: "user" },
-        text: { type: String, required: true },
+        name: { type: String },
+        text: { type: String },
       },
     ],
     geolocation: { type: String, default: null },

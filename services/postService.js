@@ -1,4 +1,5 @@
 const Post = require("../schemas/postSchema");
+const User = require("../schemas/userSchema");
 
 const getPostService = async ({ skip, limit }) => {
   const count = await Post.find({}).count();
@@ -45,14 +46,18 @@ const changeUserPostService = async (postId, userId, body, photo) => {
   );
 };
 
-const changeCommentsInService = async (postId, body) => {
-  const result = await Post.findById({ _id: postId });
-  if (!result) {
+const changeCommentsInService = async (postId, userId, body) => {
+  const user = await User.findById({ _id: userId });
+  const post = await Post.findById({ _id: postId });
+  const { text } = body;
+  const comments = { text, user: user._id, name: user.name };
+  console.log("comments: ", comments);
+  if (!post) {
     return;
   }
   return await Post.findOneAndUpdate(
     { _id: postId },
-    { ...body },
+    { $push: { comments } },
     { new: true }
   );
 };

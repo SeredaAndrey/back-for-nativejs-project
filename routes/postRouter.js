@@ -33,6 +33,6 @@ router.patch(
   uploadPostPhotoCloud.single("image"),
   asyncWrapper(changeUserPostController)
 );
-router.patch("/:postId/comment", asyncWrapper(changeCommentsInPostController));
+router.post("/:postId/comment", asyncWrapper(changeCommentsInPostController));
 
 module.exports = { postRouter: router };

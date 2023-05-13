@@ -140,13 +140,14 @@ const changeUserPostController = async (req, res, next) => {
 };
 
 const changeCommentsInPostController = async (req, res, nex) => {
+  const userId = req.user._id;
   const { postId } = req.params;
   const body = req.body;
 
   const reqValidate = patchPostValidate.validate(req.body);
 
   if (!reqValidate.error) {
-    const post = await changeCommentsInService(postId, body);
+    const post = await changeCommentsInService(postId, userId, body);
     if (post) {
       res.status(200).json({
         message: "change post success",
