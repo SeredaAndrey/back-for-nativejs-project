@@ -9,6 +9,7 @@ const {
   deleteUserPostService,
   changeUserPostService,
   getSingleUserPostService,
+  changeCommentsInService,
 } = require("../services/postService");
 
 const getPostController = async (req, res, next) => {
@@ -138,6 +139,24 @@ const changeUserPostController = async (req, res, next) => {
   } else throw new ValidateError(reqValidate.error);
 };
 
+const changeCommentsInPostController = async (req, res, nex) => {
+  const { postId } = req.params;
+  const body = req.body;
+
+  const reqValidate = patchPostValidate.validate(req.body);
+
+  if (!reqValidate.error) {
+    const post = await changeCommentsInService(postId, body);
+    if (post) {
+      res.status(200).json({
+        message: "change post success",
+        code: 200,
+        post,
+      });
+    } else throw new FoundingError("post not found");
+  } else throw new ValidateError(reqValidate.error);
+};
+
 module.exports = {
   getPostController,
   getUserPostController,
@@ -145,4 +164,5 @@ module.exports = {
   getSingleUserPostController,
   deleteUserPostController,
   changeUserPostController,
+  changeCommentsInPostController,
 };

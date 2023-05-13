@@ -12,6 +12,7 @@ const {
   deleteUserPostController,
   changeUserPostController,
   getSingleUserPostController,
+  changeCommentsInPostController,
 } = require("../controllers/postController");
 
 const router = express.Router();
@@ -32,5 +33,6 @@ router.patch(
   uploadPostPhotoCloud.single("image"),
   asyncWrapper(changeUserPostController)
 );
+router.patch("/:postId/comment", asyncWrapper(changeCommentsInPostController));
 
 module.exports = { postRouter: router };

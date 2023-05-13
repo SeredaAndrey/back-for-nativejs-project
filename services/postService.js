@@ -45,6 +45,18 @@ const changeUserPostService = async (postId, userId, body, photo) => {
   );
 };
 
+const changeCommentsInService = async (postId, body) => {
+  const result = await Post.findById({ _id: postId });
+  if (!result) {
+    return;
+  }
+  return await Post.findOneAndUpdate(
+    { _id: postId },
+    { ...body },
+    { new: true }
+  );
+};
+
 module.exports = {
   getPostService,
   getUserPostService,
@@ -52,4 +64,5 @@ module.exports = {
   getSingleUserPostService,
   deleteUserPostService,
   changeUserPostService,
+  changeCommentsInService,
 };
