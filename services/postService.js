@@ -51,13 +51,19 @@ const changeCommentsInService = async (postId, userId, body) => {
   const post = await Post.findById({ _id: postId });
   const { text } = body;
   const comments = { text, user: user._id, name: user.name };
-  console.log("comments: ", comments);
+  console.log("post.countComment: ", post.countComment);
   if (!post) {
     return;
   }
+  let count = post.countComment;
+  if (!count) {
+    count = 1;
+  } else {
+    count = count + 1;
+  }
   return await Post.findOneAndUpdate(
     { _id: postId },
-    { $push: { comments } },
+    { $push: { comments }, countComment: count },
     { new: true }
   );
 };

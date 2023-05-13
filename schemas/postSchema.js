@@ -17,8 +17,8 @@ const post = new Schema(
         name: { type: String },
         text: { type: String },
       },
-      { timestamps: true },
     ],
+    countComment: { type: Number, default: null },
     geolocation: { type: String, default: null },
   },
   { timestamps: true }
