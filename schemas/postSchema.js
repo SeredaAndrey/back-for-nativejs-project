@@ -17,6 +17,7 @@ const post = new Schema(
         name: { type: String },
         text: { type: String },
       },
+      { timestamps: true },
     ],
     geolocation: { type: String, default: null },
   },
