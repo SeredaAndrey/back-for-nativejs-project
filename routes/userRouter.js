@@ -17,7 +17,7 @@ const router = express.Router();
 router.use(authMiddleware);
 
 router.get("/", asyncWrapper(getUserDataController));
-router.get("/userId", asyncWrapper(getUserDataByIdController));
+router.get("/:userId", asyncWrapper(getUserDataByIdController));
 router.get("/info", asyncWrapper(getUserInfoController));
 router.patch(
   "/",
