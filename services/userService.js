@@ -5,6 +5,10 @@ const getUserDataService = async (_id) => {
   return await User.findOne({ _id }, { password: 0 });
 };
 
+const getUserDataByIdService = async (userId) => {
+  return await User.findOne({ _id: userId }, { password: 0 });
+};
+
 const getUserInfoService = async (_id) => {
   const countPostAddingToPortal = await Post.find({
     owner: _id,
@@ -41,6 +45,7 @@ const patchUserDataService = async (_id, body, avatarUrl) => {
 
 module.exports = {
   getUserDataService,
+  getUserDataByIdService,
   getUserInfoService,
   patchUserDataService,
 };

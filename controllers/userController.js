@@ -5,11 +5,24 @@ const {
   getUserDataService,
   patchUserDataService,
   getUserInfoService,
+  getUserDataByIdService,
 } = require("../services/userService");
 
 const getUserDataController = async (req, res, next) => {
   const _id = req.user._id;
   const user = await getUserDataService(_id);
+  if (user) {
+    res.status(200).json({
+      message: "User found success",
+      code: 200,
+      user,
+    });
+  } else throw new FoundingError("User not found");
+};
+
+const getUserDataByIdController = async (req, res, next) => {
+  const { userId } = req.params;
+  const user = await getUserDataByIdService(userId);
   if (user) {
     res.status(200).json({
       message: "User found success",
@@ -60,6 +73,7 @@ const patchUserDataController = async (req, res, next) => {
 
 module.exports = {
   getUserDataController,
+  getUserDataByIdController,
   getUserInfoController,
   patchUserDataController,
 };
