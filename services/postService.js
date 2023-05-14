@@ -50,7 +50,12 @@ const changeCommentsInService = async (postId, userId, body) => {
   const user = await User.findById({ _id: userId });
   const post = await Post.findById({ _id: postId });
   const { text } = body;
-  const comments = { text, user: user._id, name: user.name };
+  const comments = {
+    text,
+    user: user._id,
+    name: user.name,
+    avatar: user.avatarUrl,
+  };
   console.log("post.countComment: ", post.countComment);
   if (!post) {
     return;
