@@ -4,7 +4,7 @@ const createPostValidate = Joi.object({
   description: Joi.string().required(),
   text: Joi.string(),
   photo: Joi.any(),
-  geolocation: Joi.string(),
+  geolocation: Joi.any(),
 });
 
 const patchPostValidate = Joi.object({

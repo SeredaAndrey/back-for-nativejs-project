@@ -20,7 +20,15 @@ const post = new Schema(
       },
     ],
     countComment: { type: Number, default: null },
-    geolocation: { type: String, default: null },
+    geolocation: {
+      accuracy: { type: String, default: null },
+      altitude: { type: String, default: null },
+      altitudeAccuracy: { type: String, default: null },
+      heading: { type: String, default: null },
+      latitude: { type: String, default: null },
+      longitude: { type: String, default: null },
+      speed: { type: String, default: null },
+    },
   },
   { timestamps: true }
 );
