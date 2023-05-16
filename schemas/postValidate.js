@@ -2,7 +2,7 @@ const Joi = require("joi");
 
 const createPostValidate = Joi.object({
   description: Joi.string().required(),
-  text: Joi.string().required(),
+  text: Joi.string(),
   photo: Joi.any(),
   geolocation: Joi.string(),
 });
